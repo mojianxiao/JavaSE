@@ -5,7 +5,7 @@ package com.mojianxiao.designMode;
  * 多个线程同时进入	if(singleton == null)，将会导致多次实例化singletion引发线程不安全
  * */
 public class Singleton {
-//懒汉模式(线程不安全 )
+	//懒汉模式(线程不安全)
 	private static Singleton singleton;
 	private Singleton() {}
 	public static Singleton getSingleton() {
@@ -14,8 +14,31 @@ public class Singleton {
 		return singleton;
 	}
 	
-//饿汉式(线程安全)
-		private static Singleton singleton2 = new Singleton();
-//懒汉式-线程安全
-		
+	//饿汉式(线程安全)
+	private static Singleton singleton2 = new Singleton();
+	//懒汉式-线程安全
+	private static  synchronized  Singleton getSingleton2(){
+		if(singleton == null)
+			singleton = new Singleton();
+		return singleton;
+	}
+	//静态内部类
+	private static class SingletonHolder{
+		private static final Singleton INSTANCE = new Singleton();
+	}
+	public static Singleton getsingletion2(){
+		return SingletonHolder.INSTANCE;
+	}
+	public enum Singletion{
+		INSTANCE;
+		private String name;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
 }
